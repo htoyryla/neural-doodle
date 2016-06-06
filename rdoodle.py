@@ -53,6 +53,51 @@ add_arg('--randomize',       default=False, type=bool,       help='Generate para
 
 args = parser.parse_args()
 
+if args.randomize is not False:
+    print ("randomizing...")
+    nlayers = len(args.layers)
+
+    r_variety = [0] * nlayers
+    r_ = random.randint(0,30) 
+    for i in range(0, nlayers):
+      r_variety[i] = r_ / 100
+      r_ = random.randint(0, int(r_)) 
+    print("variety", r_variety)
+    args.variety = r_variety
+    
+    r_cweight = [0] * nlayers
+    r_ = random.randint(1,50) 
+    for i in range(0, nlayers):
+      r_cweight[i] = r_ / 100
+      r_ = random.randint(1, int(r_)) 
+    print("content_weight", r_cweight)
+    args.content_weight = r_cweight
+
+    r_iterations = [0] * nlayers
+    r_ = random.randint(1,8) 
+    for i in range(0, nlayers):
+      r_iterations[i] = r_ 
+      r_ = random.randint(1, r_) 
+    print("iterations", r_iterations)
+    args.iterations = r_iterations
+
+    r_shapes = [0] * nlayers
+    r_ = random.randint(1,5) 
+    for i in range(0, nlayers):
+      r_shapes[i] = 1 + r_
+      r_ = random.randint(0, int(r_)) 
+    print("shapes", r_shapes)
+    args.shapes = r_shapes
+
+    r_pw = [0] * (nlayers - 1)
+    r_ = random.randint(1,30) 
+    for i in range(0, nlayers-1):
+      r_pw[i] = r_ / 100
+      r_ = random.randint(1, int(30)) 
+    print("previous_weight", r_pw)
+    args.previous_weight = r_pw
+
+
 
 #----------------------------------------------------------------------------------------------------------------------
 
@@ -275,50 +320,6 @@ class NeuralGenerator(object):
             os.makedirs('frames', exist_ok=True)
         if args.output is not None and os.path.isfile(args.output):
             os.remove(args.output)
-
-        if args.randomize is not False:
-            print ("randomizing...")
-            nlayers = len(args.layers)
-
-            r_variety = [0] * nlayers
-            r_ = random.randint(0,30) 
-            for i in range(0, nlayers):
-              r_variety[i] = r_ / 100
-              r_ = random.randint(0, int(r_)) 
-            print("variety", r_variety)
-            args.variety = r_variety
-    
-            r_cweight = [0] * nlayers
-            r_ = random.randint(1,50) 
-            for i in range(0, nlayers):
-              r_cweight[i] = r_ / 100
-              r_ = random.randint(1, int(r_)) 
-            print("content_weight", r_cweight)
-            args.content_weight = r_cweight
-
-            r_iterations = [0] * nlayers
-            r_ = random.randint(1,8) 
-            for i in range(0, nlayers):
-              r_iterations[i] = r_ 
-              r_ = random.randint(1, r_) 
-            print("iterations", r_iterations)
-            args.iterations = r_iterations
-
-            r_shapes = [0] * nlayers
-            r_ = random.randint(1,5) 
-            for i in range(0, nlayers):
-              r_shapes[i] = 1 + r_
-              r_ = random.randint(0, int(r_)) 
-            print("shapes", r_shapes)
-            args.shapes = r_shapes
-
-            r_pw = [0] * (nlayers - 1)
-            r_ = random.randint(1,30) 
-            for i in range(0, nlayers-1):
-              r_pw[i] = r_ / 100
-              r_ = random.randint(1, int(30)) 
-            print("previous_weight", r_pw)
-            args.previous_weight = r_pw
 
 
         # Finalize the parameters based on what we loaded, then create the model.

@@ -104,7 +104,8 @@ if args.randomize is not False:
     print("previous_weight", r_pw)
     args.previous_weight = r_pw
 else:
-    args.layers = ['5_1','4_1','3_1']
+    if args.layers == None:
+        args.layers = ['5_1','4_1','3_1']
 
 
 #f = open('/var/www/html/test/params.txt', 'w')

@@ -35,7 +35,7 @@ parser = argparse.ArgumentParser(description='Generate a new image by applying s
 add_arg = parser.add_argument
 add_arg('--content',         default=None, type=str,         help='Subject image path to repaint in new style.')
 add_arg('--style',           default=None, type=str,         help='Texture image path to extract patches from.')
-add_arg('--layers',          default=['5_1','4_1','3_1'], nargs='+', type=str, help='The layers/scales to process.')
+add_arg('--layers',          default=None, nargs='+', type=str, help='The layers/scales to process.')
 add_arg('--variety',         default=[0.2, 0.1, 0.0], nargs='+', type=float,   help='Bias selecting diverse patches')
 add_arg('--previous-weight', default=[0.0, 0.2], nargs='+', type=float,        help='Weight of previous layer features.')
 add_arg('--content-weight',  default=[0.0], nargs='+', type=float, help='Weight of input content features each layer.')
@@ -55,6 +55,13 @@ args = parser.parse_args()
 
 if args.randomize is not False:
     print ("randomizing...")
+
+    if args.layers == None:
+      layer_confs = [['6_1','5_1','4_1'],['5_1','4_1','3_1'],['5_1','4_1'],['4_1','3_1']]
+      layers = random.choice(layer_confs)
+      args.layers = layers 
+    print("layers",args.layers)
+    
     nlayers = len(args.layers)
 
     r_variety = [0] * nlayers
@@ -96,7 +103,18 @@ if args.randomize is not False:
       r_ = random.randint(1, int(30)) 
     print("previous_weight", r_pw)
     args.previous_weight = r_pw
+else:
+    args.layers = ['5_1','4_1','3_1']
 
+
+f = open('/var/www/html/test/params.txt', 'w')
+f.write("layers: " + str(args.layers))
+f.write(" - variety: " + str(r_variety))
+f.write(" - content_weight: " + str(r_cweight))
+f.write(" - iterations: " + str(r_iterations))
+f.write(" - shapes: " + str(r_shapes))
+f.write(" - previous_weight: " + str(r_pw))
+f.close()
 
 
 #----------------------------------------------------------------------------------------------------------------------

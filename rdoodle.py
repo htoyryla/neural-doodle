@@ -107,14 +107,14 @@ else:
     args.layers = ['5_1','4_1','3_1']
 
 
-f = open('/var/www/html/test/params.txt', 'w')
-f.write("layers: " + str(args.layers))
-f.write(" - variety: " + str(r_variety))
-f.write(" - content_weight: " + str(r_cweight))
-f.write(" - iterations: " + str(r_iterations))
-f.write(" - shapes: " + str(r_shapes))
-f.write(" - previous_weight: " + str(r_pw))
-f.close()
+#f = open('/var/www/html/test/params.txt', 'w')
+#f.write("layers: " + str(args.layers))
+#f.write(" - variety: " + str(r_variety))
+#f.write(" - content_weight: " + str(r_cweight))
+#f.write(" - iterations: " + str(r_iterations))
+#f.write(" - shapes: " + str(r_shapes))
+#f.write(" - previous_weight: " + str(r_pw))
+#f.close()
 
 
 #----------------------------------------------------------------------------------------------------------------------
